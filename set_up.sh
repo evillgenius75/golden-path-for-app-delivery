@@ -33,6 +33,8 @@ gcloud container clusters get-credentials prod --region ${REGION}
 
 sed -i .old1 "s/project-id-placeholder/${PROJECT_ID}/g;s/region-placeholder/${REGION}/g" deploy/*.yaml
 
+
+
 gcloud artifacts repositories create cicd-sample-repo \
     --repository-format=Docker \
     --location ${REGION}
@@ -40,8 +42,9 @@ gcloud artifacts repositories create cicd-sample-repo \
 gsutil mb gs://${PROJECT_ID}-gceme-artifacts/
 
 gcloud beta builds triggers create github \
-    --repo-name="cicd-sample-main" \
-    --rep="cicd-sample" \
+    --name=cicd-demo \
+    --repo-name="golden-path-for-app-delivery" \
+    --repo-owner="evillgenius75" \
     --branch-pattern="main" \
     --build-config="cloudbuild.yaml"
 
