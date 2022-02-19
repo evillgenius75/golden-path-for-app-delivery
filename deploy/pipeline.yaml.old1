@@ -13,12 +13,17 @@
 # limitations under the License.
 
 apiVersion: deploy.cloud.google.com/v1beta1
-kind: Target
+kind: DeliveryPipeline
 metadata:
-  name: prod
-  annotations: {}
-  labels: {}
-description: prod
-requireApproval: true
-gke:
-  cluster: projects/eddiejv-demo/locations/us-central1/clusters/prod
+  name: cicd-sample
+  labels:
+    app: cicd-sample
+description: cicd-sample delivery pipeline
+serialPipeline:
+  stages:
+  - targetId: staging
+    profiles:
+    - staging
+  - targetId: prod
+    profiles:
+    - prod
